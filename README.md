@@ -31,3 +31,9 @@ When code is built without vaiable attribute for the vector table, the table is 
 
 this picture is where section attribute is used for vector table section
 ![img](Docs/vector_table_section.png)
+
+There are 50+ exceptions, but you don't have to write exception handlers for all the exceptions, if you are not handling all of the exceptions. A single default handler can be used for all exceptions. Allow programmer to implement required handlers as per application requirements. This can be acheived by using GCC function attributes __weak__ and __alias__ .
+
+1. Weak allows programmer to override already defined weak function (dummy) with the same function name
+   - programmer can override the function in the main file by using the same name
+2. Alias allows programmer to give alias name for a function
