@@ -37,3 +37,5 @@ There are 50+ exceptions, but you don't have to write exception handlers for all
 1. Weak allows programmer to override already defined weak function (dummy) with the same function name
    - programmer can override the function in the main file by using the same name
 2. Alias allows programmer to give alias name for a function
+
+rest of the startup code will be finished after writing the linker script
