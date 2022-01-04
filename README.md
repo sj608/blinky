@@ -45,3 +45,60 @@ There are 50+ exceptions, but you don't have to write exception handlers for all
 2. Alias allows programmer to give alias name for a function
 
 rest of the startup code will be finished after writing the linker script
+
+
+## Linker Script
+
+1. text file which explains how different sections of the obeject files should be merged to create an output file
+2. by reffering to the address information mentioned in the linker script, linker assigns the unique absolute addresses to the different sections of the output file.
+3. also includes the code and data memory address and size information
+4. written using GNU linker command language and file extension of .ld
+5. must supplied during the linking phase to the linker using -T option
+
+### Commands
+
+* ENTRY
+  - Entry point address inofrmation in the header of final elf file generated
+  - In most cases, "Reset_Handler" is the 
+  - debugger uses this information to locate the first function to execute
+  - Syntax: ENTRY(Function_name)
+* MEMORY
+  - allows to describe the different memories present in the target and their start address and size info
+  - assign addresses to merged section
+  - calculate total code and data memory consumed and throw an error message if data, code heap or stack cannot fit into the available size
+  - typically one linker script has one memory command
+  - syntax: 
+
+```
+MEMORY
+{
+   name (att): ORIGIN = origin, LENGTH =len
+}
+```
+* SECTION
+  - create different output sections in the final elf
+  - instruct the linker how to merge the input sections to yield an output section
+  - controls the order in which different output sections appear in the elf file
+  - mention the placement of a section in memory region. Example instruct the linker to place the .text section in the FLASH memory region.
+
+```
+SECTIONS
+{  
+    .text:
+    {
+       *(.isr_vector) - place vector table before the code or text section
+       *(.text) - merge all text section of input files
+       *(.rodata)
+    }> vma(virtual memory address) AT>lma (load memory address)
+    
+    .data: - initialized data
+    {
+
+    }> SRAM AT> FLASH - the linker will load the data section ot FLASH then assigin absolute address to SRAM
+
+    .bss
+    {
+       
+    }
+}
+```
